@@ -26,14 +26,13 @@ def logout():
 
 @app.route('/<name>/<int:answer>')
 def guess(name, answer):
-	print(session.get('username'))
-	if not session.get('username'):
-		redirect('/')
+	if session.get('username', 'Anonymous') == 'Anonymous':
+		return redirect('/')
 
 	correct = (answer == 42)
 	return render_template(
 		'guess.html',
-		name=name,
+		name=session.get('username', 'Anonymous'),
 		correct=correct
 	)
 
