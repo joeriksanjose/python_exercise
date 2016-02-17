@@ -4,8 +4,10 @@
 {% if correct %}
 	<title>Congrats!</title>
 	<h1>You found the answer, {{ name }}</h1>
+	<a href={{ url_for('logout') }}>logout</a>
 {% else %}
 	<title>You lose!</title>
 	<h1>Try again</h1>
+	<a href={{ url_for('hello') }}>Go Back</a>
 {% endif %}
 {% endblock body %}

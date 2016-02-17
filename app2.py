@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session
 app = Flask(__name__)
+app.secret_key = 'TestingPo'
 
 @app.route('/')
 def hello():
@@ -13,14 +14,22 @@ def login():
 
 	for admin in admins:
 		if admin['username'] == username and admin['password'] == password:
-			return redirect('guess/'+username+'42')
+			session['username'] = username
+			return redirect(username+'/42')
 
-	return redirect('guess/'+username+'0')
+	return redirect(username+'/0')
 
-
+@app.route('/logout')
+def logout():
+	session.clear()
+	return redirect('/')
 
 @app.route('/<name>/<int:answer>')
 def guess(name, answer):
+	print(session.get('username'))
+	if not session.get('username'):
+		redirect('/')
+
 	correct = (answer == 42)
 	return render_template(
 		'guess.html',
