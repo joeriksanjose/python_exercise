@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if correct %}
+	<title>Congrats!</title>
+	<h1>You found the answer, {{ name }}</h1>
+{% else %}
+	<title>You lose!</title>
+	<h1>Try again</h1>
+{% endif %}
+{% endblock body %}
